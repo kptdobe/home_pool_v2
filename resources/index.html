@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Alexandre Capt">
+
+    <link rel="stylesheet" href="css/libs/bootstrap.min.css">
+    <link rel="stylesheet" href="css/libs/bootstrap-theme.min.css">
+
+    <link rel="stylesheet" href="css/app/utils.css">
+    <link rel="stylesheet" href="css/app/loading.css">
+    <link rel="stylesheet" href="css/app/app.css">
+
+    <title>Alex's Pool</title>
+</head>
+<body role="document">
+
+<br>
+
+<div class="container theme-showcase" role="main">
+    <div class="panel panel-info">
+        <div class="panel-heading">
+            <h3 class="panel-title">Piscine</h3>
+        </div>
+        <div class="panel-body">
+            <h4>Lumière: <button type="button" class="btn btn-default btn-pool-light">Chargement...</button></h4>
+            <h4>Pompe:
+                    <span class="form-inline" role="form">
+                        <div class="input-group">
+                            <span class="input-group-addon">De</span>
+                            <input type="text" class="form-control input-two-digits" name="pool-pump-start" value="0" maxlength="2">
+                            <span class="input-group-addon">h à</span>
+                            <input type="text" class="form-control input-two-digits" name="pool-pump-stop" value="15" maxlength="2">
+                            <span class="input-group-addon">h</span>
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-default btn-pool-pump-update"><span class="glyphicon glyphicon-ok"></span></button>
+                            </span>
+                        </div>
+                    </span>
+                <button type="button" class="btn btn-default btn-pool-pump-start btn-pool-pump-stop">Démarrage manuel</button>
+            </h4>
+            <h4>Chauffage:
+                    <span class="form-inline" role="form">
+                        <div class="input-group">
+                            <input type="text" class="form-control input-two-digits" name="pool-temp" value="28" maxlength="2">
+                            <span class="input-group-addon">ºC</span>
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-default btn-pool-temp-update"><span class="glyphicon glyphicon-ok"></span></button>
+                            </span>
+                        </div>
+                    </span>
+            </h4>
+            <h4>Température avant échangeur: <span class="label label-success" id="temp_pool"></span></h4>
+
+        </div>
+    </div>
+    <div class="panel panel-info">
+        <div class="panel-heading">
+            <h3 class="panel-title">Garage</h3>
+        </div>
+        <div class="panel-body">
+            <h4>Température: <span class="label label-success" id="temp_garage"></span></h4>
+        </div>
+    </div>
+</div>
+
+<script src="js/libs/jquery-2.1.1.min.js"></script>
+<script src="js/libs/bootstrap.min.js"></script>
+<script src="js/libs/underscore.js"></script>
+<script src="js/libs/backbone.js"></script>
+
+<!--<script src="/webiopi.js"></script>-->
+
+<script src="js/app/home.js"></script>
+
+<script src="js/app/utils/utils.js"></script>
+
+<script src="js/app/models/light.js"></script>
+
+<script src="js/app/views/loading.js"></script>
+<script src="js/app/views/app.js"></script>
+
+<script src="js/app/bootstrap.js"></script>
+
+</body>
+</html>
