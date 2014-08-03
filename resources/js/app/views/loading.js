@@ -5,6 +5,8 @@
     'use strict';
 
     home.Views.Loading = Backbone.View.extend({
+        className: 'home-Loading',
+
         initialize: function (root) {
             this.render().appendTo(root);
         },
