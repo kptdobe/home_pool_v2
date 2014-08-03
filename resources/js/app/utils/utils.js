@@ -13,4 +13,29 @@
         return uuid;
     };
 
+    home.util.notValue = function(v) {
+        if( !v || v == "0" ) {
+            return "1";
+        } else {
+            return "0";
+        }
+    };
+
+    // The Template Loader. Used to asynchronously load templates located in separate .html files
+    home.util.loadTemplates = function(views, callback) {
+        var deferreds = [];
+
+        $.each(views, function(index, view) {
+            if (home.Views[view]) {
+                deferreds.push($.get('tpl/' + view + '.html', function(data) {
+                    home.Views[view].prototype.template = _.template(data);
+                }, 'html'));
+            } else {
+                console.log(view + " not found");
+            }
+        });
+
+        $.when.apply(null, deferreds).done(callback);
+    };
+
 })();

@@ -24,8 +24,26 @@
             this.loadingScreen = new home.Views.Loading(this.$el);
 
             window.setTimeout(function() {
-                self.loadingScreen.remove();
-            }, 2000);
+
+
+                var l = new home.Models.Light({
+                    url: "/api/light"
+                });
+
+                var vl = new home.Views.Light({
+                    model: l
+                });
+
+                l.fetch({
+                    success: function(data) {
+                        self.loadingScreen.remove();
+                    }
+                });
+
+                $(home.rootElement).append(vl.render());
+            }, 100);
+
+
 
         }
 

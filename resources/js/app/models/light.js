@@ -4,23 +4,24 @@
     'use strict';
 
     home.Models.Light = Backbone.Model.extend({
+        sync: function (method, model, options) {
+            options.url = this.get("url");
 
-        initialize: function (attr) {
-            var opt = attr || {};
+            if (method === 'update' || method === 'create') {
+                options.url += "/" + this.get("value");
+            }
 
-            this.set('id', opt.id || home.util.guid());
-            this.set('name', this.get('id'));
+            return Backbone.sync.call(this, method, model, options);
+
         },
 
-        defaults: {
+        initialize: function () {},
 
-        },
+        defaults: {},
 
-        validate: function(attrs, options) {
-        },
-
-        parse: function(response, options)  {
-            return response;
+        toggle: function() {
+            var v = home.util.notValue(this.get("value"));
+            this.save("value", v);
         }
     });
 
