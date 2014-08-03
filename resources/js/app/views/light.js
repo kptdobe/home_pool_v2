@@ -6,7 +6,7 @@
 
     home.Views.Light = Backbone.View.extend({
         events: {
-            "click .btn": "handleClick"
+            "click ": "handleClick"
         },
 
         config: {},
@@ -19,12 +19,14 @@
         },
 
         render: function () {
-            var r = this.$el.html(this.template(this.model.toJSON()));
+            this.$el = $(this.template(this.model.toJSON()));
 
-            this.btn = this.$el.find(".btn");
-            this.config = this.btn.data("config");
+            this.config = this.$el.data("config");
+            this.$el.removeData("config");
 
-            return r;
+            this.delegateEvents(this.events);
+
+            return this.$el;
         },
 
         handleClick: function() {
@@ -33,9 +35,9 @@
 
         updateButton: function() {
             var v = this.model.get("value");
-            this.btn.html(this.config[v].label);
-            this.btn.removeClass(this.config[home.util.notValue(v)].css);
-            this.btn.addClass(this.config[v].css);
+            this.$el.html(this.config[v].label);
+            this.$el.removeClass(this.config[home.util.notValue(v)].css);
+            this.$el.addClass(this.config[v].css);
         }
 
 

@@ -11,10 +11,6 @@
 
         className: 'home-App',
 
-        attributes: {
-            'touch-action': 'none'
-        },
-
         events: {},
 
         initialize: function () {
@@ -34,13 +30,35 @@
                     model: l
                 });
 
-                l.fetch({
+                l.fetch();
+
+                var tp = new home.Models.Temperature({
+                    url: "/api/temp/pool"
+                });
+
+                var vtp = new home.Views.Temperature({
+                    model: tp
+                });
+
+                tp.fetch();
+
+                var tg = new home.Models.Temperature({
+                    url: "/api/temp/garage"
+                });
+
+                var vtg = new home.Views.Temperature({
+                    model: tg
+                });
+
+                tg.fetch({
                     success: function(data) {
                         self.loadingScreen.remove();
                     }
                 });
 
                 $(home.rootElement).append(vl.render());
+                $(home.rootElement).append(vtp.render());
+                $(home.rootElement).append(vtg.render());
             }, 100);
 
 
