@@ -3,7 +3,7 @@
 (function () {
     'use strict';
 
-    home.Models.Light = Backbone.Model.extend({
+    home.Models.Switch = Backbone.Model.extend({
         sync: function (method, model, options) {
             options.url = this.get("url");
 

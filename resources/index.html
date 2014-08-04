@@ -26,10 +26,24 @@
         </div>
         <div class="panel-body">
             <h4>Lumière:
-                <div class="view-Light" data-config='{"url": "/api/light"}'></div>
+                <div class="view-Switch" data-config='{"url": "/api/light"}'></div>
             </h4>
             <h4>Température avant échangeur: <div class="view-Temperature" data-config='{"url": "/api/temp/pool"}'></div></h4>
-
+            <h4>Pompe:
+                    <span class="form-inline" role="form">
+                        <div class="input-group">
+                            <span class="input-group-addon">De</span>
+                            <input type="text" class="form-control input-two-digits" name="pool-pump-start" value="0" maxlength="2">
+                            <span class="input-group-addon">h à</span>
+                            <input type="text" class="form-control input-two-digits" name="pool-pump-stop" value="15" maxlength="2">
+                            <span class="input-group-addon">h</span>
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-default btn-pool-pump-update"><span class="glyphicon glyphicon-ok"></span></button>
+                            </span>
+                        </div>
+                    </span>
+            </h4>
+            <h4>Démarrage manuel filtration: <div class="view-Switch" data-config='{"url": "/api/filtration"}'></div></h4>
         </div>
     </div>
     <div class="panel panel-info">
@@ -49,15 +63,15 @@
 
 <script src="js/app/home.js"></script>
 
-<script src="js/app/utils/utils.js"></script>
+<script src="js/app/utils/Utils.js"></script>
 
-<script src="js/app/models/light.js"></script>
-<script src="js/app/models/temperature.js"></script>
+<script src="js/app/models/Switch.js"></script>
+<script src="js/app/models/Temperature.js"></script>
 
-<script src="js/app/views/loading.js"></script>
-<script src="js/app/views/light.js"></script>
-<script src="js/app/views/temperature.js"></script>
-<script src="js/app/views/app.js"></script>
+<script src="js/app/views/Loading.js"></script>
+<script src="js/app/views/Switch.js"></script>
+<script src="js/app/views/Temperature.js"></script>
+<script src="js/app/views/App.js"></script>
 
 <script src="js/app/bootstrap.js"></script>
 

@@ -4,7 +4,7 @@
 (function () {
     'use strict';
 
-    home.Views.Light = Backbone.View.extend({
+    home.Views.Switch = Backbone.View.extend({
         events: {
             "click ": "handleClick"
         },
@@ -37,9 +37,13 @@
 
         updateButton: function() {
             var v = this.model.get("value");
-            this.$el.html(this.config[v].label);
-            this.$el.removeClass(this.config[home.util.notValue(v)].css);
-            this.$el.addClass(this.config[v].css);
+            if( this.config[v] ) {
+                this.$el.html(this.config[v].label);
+                this.$el.removeClass(this.config[home.util.notValue(v)].css);
+                this.$el.addClass(this.config[v].css);
+            } else {
+                this.$el.html("Etat inconnu");
+            }
         }
 
 
