@@ -30,7 +30,6 @@
         },
 
         handleLoading: function() {
-            console.log("loading...");
             this.$label.html(new home.Views.Loading16().render());
         }
 

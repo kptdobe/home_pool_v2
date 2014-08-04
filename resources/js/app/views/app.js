@@ -16,8 +16,6 @@
                 var s = css ? css.split("-") : [];
                 var name = s.length > 1 ? s[1] : null;
 
-                console.log("find", $item, css, s, name);
-
                 if( name && home.Models[name] && home.Views[name]) {
                     var config = $item.data("config");
                     var model = new home.Models[name]({

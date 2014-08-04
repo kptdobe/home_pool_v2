@@ -13,4 +13,4 @@ storage.initSync();
 //};
 
 //storage.setItem('batman',batman);
-console.log(storage.getItem('batman').alias);
+//console.log(storage.getItem('batman').alias);
