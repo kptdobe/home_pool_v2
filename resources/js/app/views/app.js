@@ -5,67 +5,36 @@
 
     home.Views.App = Backbone.View.extend({
 
-        tagName: 'div',
-
-        id: '',
-
-        className: 'home-App',
-
-        events: {},
-
         initialize: function () {
-            var self = this;
+            var body = $(document.body);
+            body.find("[class|='view']").each(function(index, item) {
 
-            this.$el.appendTo(home.rootElement);
-//            this.loadingScreen = new home.Views.Loading(this.$el);
+                var $item = $(item);
 
-            window.setTimeout(function() {
+                //assuming there is only one for now
+                var css = $item.attr("class");
+                var s = css ? css.split("-") : [];
+                var name = s.length > 1 ? s[1] : null;
 
+                console.log("find", $item, css, s, name);
 
-                var l = new home.Models.Light({
-                    url: "/api/light"
-                });
+                if( name && home.Models[name] && home.Views[name]) {
+                    var config = $item.data("config");
+                    var model = new home.Models[name]({
+                        url: config.url
+                    });
 
-                var vl = new home.Views.Light({
-                    model: l
-                });
+                    var view = new home.Views[name]({
+                        model: model
+                    });
 
-                l.fetch();
+                    model.fetch();
 
-                var tp = new home.Models.Temperature({
-                    url: "/api/temp/pool"
-                });
-
-                var vtp = new home.Views.Temperature({
-                    model: tp
-                });
-
-                tp.fetch();
-
-                var tg = new home.Models.Temperature({
-                    url: "/api/temp/garage"
-                });
-
-                var vtg = new home.Views.Temperature({
-                    model: tg
-                });
-
-                tg.fetch({
-                    success: function(data) {
-//                        self.loadingScreen.remove();
-                    }
-                });
-
-                $(home.rootElement).append(vl.render());
-                $(home.rootElement).append(vtp.render());
-                $(home.rootElement).append(vtg.render());
-            }, 100);
-
-
-
+                    $item.before(view.render());
+                    $item.remove();
+                }
+            });
         }
-
-
 
     });
 

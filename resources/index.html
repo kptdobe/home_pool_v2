@@ -8,7 +8,6 @@
     <meta name="author" content="Alexandre Capt">
 
     <link rel="stylesheet" href="css/libs/bootstrap.min.css">
-    <link rel="stylesheet" href="css/libs/bootstrap-theme.min.css">
 
     <link rel="stylesheet" href="css/app/utils.css">
     <link rel="stylesheet" href="css/app/loading.css">
@@ -16,9 +15,32 @@
 
     <title>Alex's Pool</title>
 </head>
-<body>
+<body role="document">
 
-<div class="main"></div>
+<br>
+
+<div class="container theme-showcase" role="main">
+    <div class="panel panel-info">
+        <div class="panel-heading">
+            <h3 class="panel-title">Piscine</h3>
+        </div>
+        <div class="panel-body">
+            <h4>Lumière:
+                <div class="view-Light" data-config='{"url": "/api/light"}'></div>
+            </h4>
+            <h4>Température avant échangeur: <div class="view-Temperature" data-config='{"url": "/api/temp/pool"}'></div></h4>
+
+        </div>
+    </div>
+    <div class="panel panel-info">
+        <div class="panel-heading">
+            <h3 class="panel-title">Garage</h3>
+        </div>
+        <div class="panel-body">
+            <h4>Température: <div class="view-Temperature" data-config='{"url": "/api/temp/garage"}'></div></h4>
+        </div>
+    </div>
+</div>
 
 <script src="js/libs/jquery-2.1.1.min.js"></script>
 <script src="js/libs/bootstrap.min.js"></script>

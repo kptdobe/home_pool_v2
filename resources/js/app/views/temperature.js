@@ -15,16 +15,10 @@
                 self.handleLoading();
             });
             this.$el = $(this.template(this.model.toJSON()));
-            this.$label = this.$el.find(".label");
+            this.$label = this.$el;
         },
 
         render: function () {
-
-
-
-//            this.config = this.label.data("config");
-//            this.btn.removeData("config");
-
             this.delegateEvents(this.events);
 
             return this.$el;
