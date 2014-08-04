@@ -17,4 +17,11 @@
 
     });
 
+    home.Views.Loading16 = Backbone.View.extend({
+        render: function () {
+           return this.$el = this.template({resourceFolder: home.resourceFolder});
+        }
+
+    });
+
 })();

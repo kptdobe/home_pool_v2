@@ -20,6 +20,8 @@
 
         render: function () {
             this.$el = $(this.template(this.model.toJSON()));
+            this.$el.html(new home.Views.Loading16().render());
+
 
             this.config = this.$el.data("config");
             this.$el.removeData("config");

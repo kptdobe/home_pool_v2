@@ -11,3 +11,8 @@
 
     z-index: 999;
 }
+
+.home-item-Loading {
+    height: 16px;
+    width: 16px;
+}

@@ -17,7 +17,7 @@
             var self = this;
 
             this.$el.appendTo(home.rootElement);
-            this.loadingScreen = new home.Views.Loading(this.$el);
+//            this.loadingScreen = new home.Views.Loading(this.$el);
 
             window.setTimeout(function() {
 
@@ -52,7 +52,7 @@
 
                 tg.fetch({
                     success: function(data) {
-                        self.loadingScreen.remove();
+//                        self.loadingScreen.remove();
                     }
                 });
 
