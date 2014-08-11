@@ -7,7 +7,7 @@
 
         initialize: function () {
             var body = $(document.body);
-            body.find("[class|='view']").each(function(index, item) {
+            body.find("[class|='home']").each(function(index, item) {
 
                 var $item = $(item);
 
@@ -18,18 +18,22 @@
 
                 if( name && home.Models[name] && home.Views[name]) {
                     var config = $item.data("config");
-                    var model = new home.Models[name]({
-                        url: config.url
-                    });
+                    var model = new home.Models[name](config);
 
                     var view = new home.Views[name]({
                         model: model
                     });
 
-                    model.fetch();
-
-                    $item.before(view.render());
-                    $item.remove();
+                    model.fetch({
+                        success: function() {
+                            $item.before(view.render());
+                            $item.remove();
+                        },
+                        error: function() {
+                            $item.before(view.render());
+                            $item.remove();
+                        }
+                    });
                 }
             });
         }
