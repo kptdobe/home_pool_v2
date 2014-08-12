@@ -20,8 +20,6 @@
             this.stop = this.$el.find("[name='task-stop']");
             this.button = this.$el.find(".btn-task-update");
 
-            console.log("scheduler",this.model, this.model.get("start"));
-
             this.start.attr("value", this.model.get("start"));
             this.stop.attr("value", this.model.get("stop"));
 
@@ -31,12 +29,10 @@
             });
 
             this.start.on("change", function() {
-                console.log("start changed",this.value);
                 self.model.set("start", this.value);
             });
 
             this.stop.on("change", function() {
-                console.log("stop changed",this.value);
                 self.model.set("stop", this.value);
             });
 

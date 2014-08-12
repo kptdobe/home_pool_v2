@@ -49,7 +49,6 @@ app.all('/api/*', function(req, res){
             res.end();
         });
     }).on('error', function(e) {
-        console.log("api call error",e);
         // we got an error, return 500 error to client and log error
         res.writeHead(500);
         res.end();
@@ -58,34 +57,51 @@ app.all('/api/*', function(req, res){
     creq.end();
 });
 
-var router = express.Router();
-router.route('/tasks')
+var rdata = express.Router();
+rdata.route('/data')
+    .post(function(req, res) {
+        storage.write("data", req.body.id, req.body);
+        res.json(storage.read("data", req.body.id));
+    })
+
+    .get(function(req, res) {
+        res.json(storage.read("data"));
+    });
+rdata.route('/data/:id')
+    .get(function(req, res) {
+        res.json(storage.read("data", req.params.id));
+    })
+    .put(function(req, res) {
+        storage.write("data", req.params.id, req.body);
+        res.json(storage.read("data", req.params.id));
+    })
+    .delete(function(req, res) {
+        storage.removeItem("data", req.params.id);
+        res.json({ message: 'Successfully deleted' });
+    });
+app.use('/persist', rdata);
+
+
+var rtasks = express.Router();
+rtasks.route('/tasks')
     .post(function(req, res) {
         storage.write("scheduler", req.body.id, req.body);
         res.json(storage.read("scheduler", req.body.id));
     })
 
     .get(function(req, res) {
-        return storage.read("scheduler");
+        res.json(storage.read("scheduler"));
     });
-
-// ----------------------------------------------------
-router.route('/tasks/:id')
-
+rtasks.route('/tasks/:id')
     .get(function(req, res) {
         res.json(storage.read("scheduler", req.params.id));
     })
-
     .put(function(req, res) {
         storage.write("scheduler", req.params.id, req.body);
         res.json(storage.read("scheduler", req.params.id));
     })
-
     .delete(function(req, res) {
         storage.removeItem("scheduler", req.params.id);
         res.json({ message: 'Successfully deleted' });
     });
-
-
-// REGISTER OUR ROUTES -------------------------------
-app.use('/scheduler', router);
+app.use('/scheduler', rtasks);

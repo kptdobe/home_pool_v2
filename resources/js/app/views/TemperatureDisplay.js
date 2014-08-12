@@ -4,7 +4,7 @@
 (function () {
     'use strict';
 
-    home.Views.Temperature = Backbone.View.extend({
+    home.Views.TemperatureDisplay = Backbone.View.extend({
         config: {},
 
         initialize: function () {
@@ -13,6 +13,8 @@
                 self.updateTemperature();
             }).bind("request", function() {
                 self.handleLoading();
+            }).bind("error", function() {
+                self.updateTemperature();
             });
             this.$el = $(this.template(this.model.toJSON()));
             this.$label = this.$el;
@@ -26,7 +28,11 @@
 
         updateTemperature: function() {
             var v = this.model.get("value");
-            this.$label.html(v + " ºC");
+            if( v ) {
+                this.$label.html(v + " ºC");
+            } else {
+                this.$label.html("Etat inconnu");
+            }
         },
 
         handleLoading: function() {

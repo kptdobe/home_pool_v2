@@ -3,7 +3,7 @@
 (function () {
     'use strict';
 
-    home.Models.Temperature = Backbone.Model.extend({
+    home.Models.TemperatureDisplay = Backbone.Model.extend({
         sync: function (method, model, options) {
             options.url = this.get("url");
 

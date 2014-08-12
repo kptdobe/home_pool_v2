@@ -26,20 +26,10 @@
         </div>
         <div class="panel-body">
             <h4>Lumière: <div class="home-Switch" data-config='{"url": "/api/pool/light"}'></div></h4>
-            <h4>Température avant échangeur: <div class="home-Temperature" data-config='{"url": "/api/pool/temp"}'></div></h4>
+            <h4>Température avant échangeur: <div class="home-TemperatureDisplay" data-config='{"url": "/api/pool/temp"}'></div></h4>
             <h4>Filtration: <div class="home-Scheduler" data-config='{"id": "filtration"}'></div></h4>
             <h4>Démarrage manuel filtration: <div class="home-Switch" data-config='{"url": "/api/pool/filtration"}'></div></h4>
-            <h4>Chauffage:
-                    <span class="form-inline" role="form">
-                        <div class="input-group">
-                            <input type="text" class="form-control input-two-digits" name="pool-temp" value="28" maxlength="2">
-                            <span class="input-group-addon">ºC</span>
-                            <span class="input-group-btn">
-                                <button type="button" class="btn btn-default btn-pool-temp-update"><span class="glyphicon glyphicon-ok"></span></button>
-                            </span>
-                        </div>
-                    </span>
-            </h4>
+            <h4>Chauffage: <div class="home-TemperatureInput" data-config='{"id": "poolTemperature"}'></div></h4>
         </div>
     </div>
     <div class="panel panel-info">
@@ -47,7 +37,7 @@
             <h3 class="panel-title">Garage</h3>
         </div>
         <div class="panel-body">
-            <h4>Température: <div class="home-Temperature" data-config='{"url": "/api/garage/temp"}'></div></h4>
+            <h4>Température: <div class="home-TemperatureDisplay" data-config='{"url": "/api/garage/temp"}'></div></h4>
         </div>
     </div>
 </div>
@@ -61,14 +51,17 @@
 
 <script src="js/app/utils/Utils.js"></script>
 
+<script src="js/app/models/PersistedData.js"></script>
 <script src="js/app/models/Scheduler.js"></script>
 <script src="js/app/models/Switch.js"></script>
-<script src="js/app/models/Temperature.js"></script>
+<script src="js/app/models/TemperatureDisplay.js"></script>
+<script src="js/app/models/TemperatureInput.js"></script>
 
 <script src="js/app/views/Loading.js"></script>
 <script src="js/app/views/Scheduler.js"></script>
 <script src="js/app/views/Switch.js"></script>
-<script src="js/app/views/Temperature.js"></script>
+<script src="js/app/views/TemperatureDisplay.js"></script>
+<script src="js/app/views/TemperatureInput.js"></script>
 
 <script src="js/app/views/App.js"></script>
 
