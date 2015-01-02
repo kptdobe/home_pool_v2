@@ -3,7 +3,10 @@ var fs = require('fs');
 var express = require('express');
 var bodyParser = require('body-parser');
 
-var masterConfig = JSON.parse(fs.readFileSync('./master_config.json'));
+var pathConfigFile = process.argv.slice(2).length > 0 ? process.argv.slice(2)[0] : __dirname + '/master_config.json';
+
+console.log("[START] Looking for config file " + pathConfigFile);
+var masterConfig = JSON.parse(fs.readFileSync(pathConfigFile));
 
 var app = express();
 
