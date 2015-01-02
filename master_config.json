@@ -1,0 +1,15 @@
+{
+    "gpio": {
+        "proxy": {
+            "hostname": "rasppg",
+            "port": 80
+        }
+    },
+    "loggers": [{
+        "url": "/api/pool/temp",
+        "interval": 300000
+    },{
+        "url": "/api/garage/temp",
+        "interval": 300000
+    }]
+}

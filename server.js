@@ -1,29 +1,27 @@
 var http = require('http');
+var fs = require('fs');
 var express = require('express');
-var bodyParser = require('body-parser')
+var bodyParser = require('body-parser');
 
-var app = express()
+var masterConfig = JSON.parse(fs.readFileSync('./master_config.json'));
+
+var app = express();
 
 // parse application/json
-app.use(bodyParser.json())
+app.use(bodyParser.json());
 app.use("/",express.static(__dirname + '/resources'));
 
-app.listen(process.env.PORT || 8080);
+var server = app.listen(process.env.PORT || 8080);
 
-var storage = require('./server/persistence.js');
+var h = masterConfig.gpio.proxy.hostname;
+var p = masterConfig.gpio.proxy.port;
+console.log('[START] GPIO API proxied to ' + h + ':' + p + '/api');
 
-
-
-//var cronJob = require('cron').CronJob;
-//new cronJob('* * * * * *', function(){
-//    console.log('You will see this message every second');
-//}, null, true);
-
-
+//route /api to gpio proxy
 app.all('/api/*', function(req, res){
     var options = {
-        hostname: 'rasppg',
-        port: 80,
+        hostname: h,
+        port: p,
         path: req.url.substring(4),
         method: req.method
     };
@@ -57,6 +55,9 @@ app.all('/api/*', function(req, res){
     creq.end();
 });
 
+var storage = require('./server/persistence.js');
+
+//route /data to storage
 var rdata = express.Router();
 rdata.route('/data')
     .post(function(req, res) {
@@ -81,7 +82,7 @@ rdata.route('/data/:id')
     });
 app.use('/persist', rdata);
 
-
+//route /tasks to scheduler
 var rtasks = express.Router();
 rtasks.route('/tasks')
     .post(function(req, res) {
@@ -105,3 +106,32 @@ rtasks.route('/tasks/:id')
         res.json({ message: 'Successfully deleted' });
     });
 app.use('/scheduler', rtasks);
+
+//app
+//require('./server/crontasks.js');
+//var pool = require('./server/app/pool.js')();
+//
+//pool.start();
+//console.log(pool.getParameters());
+//pool.stop();
+
+var rLog = express.Router();
+app.use('/log', rLog);
+
+var logger = require('./server/loggers/sensors')({
+    router: rLog,
+    server: server,
+    db: './home.db'
+});
+
+if( masterConfig.loggers ) {
+    for (var i = 0; i < masterConfig.loggers.length; i++) {
+        var l = masterConfig.loggers[i];
+        console.log('[START] Logging ' + l.url + ' each ' + l.interval + ' ms.');
+        setInterval(function () {
+            logger.log({
+                url: l.url
+            });
+        }, l.interval);
+    }
+}

@@ -5,6 +5,7 @@
         "express": "~4.0.0",
         "cron": "1.0.4",
         "node-persist": "0.0.2",
-        "body-parser": "1.6.3"
+        "body-parser": "1.6.3",
+        "sqlite3": "~3.0.4"
     }
 }
