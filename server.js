@@ -12,6 +12,7 @@ app.use(bodyParser.json());
 app.use("/",express.static(__dirname + '/resources'));
 
 var server = app.listen(process.env.PORT || 8080);
+console.log("[START] Initialized server on port " + server.address().port);
 
 var h = masterConfig.gpio.proxy.hostname;
 var p = masterConfig.gpio.proxy.port;
