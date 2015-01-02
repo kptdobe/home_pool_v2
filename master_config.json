@@ -2,7 +2,7 @@
     "gpio": {
         "proxy": {
             "hostname": "rasppg",
-            "port": 80
+            "port": 81
         }
     },
     "loggers": [{
