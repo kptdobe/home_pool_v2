@@ -1,0 +1,14 @@
+.u-home-alignHorizontal {
+    display: table;
+
+    height: 100%;
+    margin: 0 auto;
+}
+
+.u-home-alignVertical {
+    display: table-cell;
+
+    height: 100%;
+
+    vertical-align: middle;
+}
