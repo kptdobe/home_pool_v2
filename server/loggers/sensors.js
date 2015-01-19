@@ -19,7 +19,7 @@ module.exports = function (config) {
         maxRecords = maxRecords || -1;
 
         if( id ) {
-            db.all("SELECT * FROM logger_sensors WHERE id like ? AND time > (strftime('%s',?)*1000) ORDER BY time ASC LIMIT ?;", id, startTime, maxRecords, callback);
+            db.all("SELECT * FROM logger_sensors WHERE id = ? AND time > (strftime('%s',?)*1000) ORDER BY time ASC LIMIT ?;", id, startTime, maxRecords, callback);
         } else {
             db.all("SELECT * FROM logger_sensors WHERE time > (strftime('%s',?)*1000) ORDER BY time ASC LIMIT ?;", startTime, maxRecords, callback);
         }
