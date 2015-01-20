@@ -8,8 +8,12 @@ module.exports = function (config) {
     var db = new sqlite3.Database(config.db);
     mu.root = __dirname;
 
+    var sensorsMap = {};
+
     function insert(data) {
-        var statement = db.prepare("INSERT INTO logger_sensors VALUES (?, ?, ?)");
+        if (!data || !data.id || !sensorsMap[data.id]) return;
+
+        var statement = db.prepare("INSERT INTO " + sensorsMap[data.id].dbTable + " VALUES (?, ?, ?)");
         statement.run(Date.now(), data.id, data.value);
         statement.finalize();
     }
@@ -18,10 +22,15 @@ module.exports = function (config) {
         startTime = startTime || Date.now() - 1000 * 60 * 60 * 24; //default to last 24h
         maxRecords = maxRecords || -1;
 
-        if( id ) {
-            db.all("SELECT * FROM logger_sensors WHERE id = ? AND time > (strftime('%s',?)*1000) ORDER BY time ASC LIMIT ?;", id, startTime, maxRecords, callback);
+        if (id && sensorsMap[id]) {
+            db.all("SELECT * FROM " + sensorsMap[id].dbTable + " WHERE id = ? AND time > (strftime('%s',?)*1000) ORDER BY time ASC LIMIT ?;", id, startTime, maxRecords, callback);
         } else {
-            db.all("SELECT * FROM logger_sensors WHERE time > (strftime('%s',?)*1000) ORDER BY time ASC LIMIT ?;", startTime, maxRecords, callback);
+            var tables = '';
+            for (var s in sensorsMap) {
+                tables += sensorsMap[s] + ' ,';
+            }
+            tables = tables.substring(0, tables.length - 1);
+            db.all("SELECT * FROM " + tables + " WHERE time > (strftime('%s',?)*1000) ORDER BY time ASC LIMIT ?;", startTime, maxRecords, callback);
         }
     }
 
@@ -42,14 +51,15 @@ module.exports = function (config) {
 
     config.router.route('/sensors/tchart')
         .get(function (req, res) {
-            var series = [{
-                url: '/log/sensors?id=/api/pool/temp',
-                name: 'Temperature Piscine'
-            },{
-                url: '/log/sensors?id=/api/garage/temp',
-                name: 'Temperature Garage',
-                last: true
-            }];
+            var series = [];
+            if (req.body.id && sensorsMap[req.body.id]) {
+                series.push(sensorsMap[req.body.id]);
+            } else {
+                for (var s in sensorsMap) {
+                    series.push(sensorsMap[s]);
+                }
+            }
+
             var stream = mu.compileAndRender('./tchart.html', {
                 id: 'tchart-' + Date.now(),
                 series: series
@@ -58,15 +68,32 @@ module.exports = function (config) {
         });
 
     return {
-        log: function (toLog) {
-            utils.get(config.server, toLog.url, function (data) {
+        log: function (sensor) {
+            utils.get(config.server, sensor.id, function (data) {
                 if (data && data.value) {
                     insert({
-                        id: toLog.url,
+                        id: sensor.id,
                         value: data.value
                     });
                 }
             });
+        },
+
+        load: function (sensors) {
+            if (util.isArray(sensors)) {
+                var logger = this;
+                for (var i = 0; i < sensors.length; i++) {
+                    var s = sensors[i];
+                    s['url'] = '/log/sensors?id=' + s.id;
+                    sensorsMap[s.id] = s;
+                    if (s.log) {
+                        console.log('[START] Logging ' + s.id + ' each ' + s.interval + ' ms.');
+                        setInterval(function (sensor) {
+                            logger.log(sensor);
+                        }, s.interval, s);
+                    }
+                }
+            }
         }
     }
 

@@ -129,15 +129,7 @@ if (masterConfig.loggers) {
         db: masterConfig.loggers.db
     });
 
-    if (masterConfig.loggers.crons) {
-        for (var i = 0; i < masterConfig.loggers.crons.length; i++) {
-            var l = masterConfig.loggers.crons[i];
-            console.log('[START] Logging ' + l.url + ' each ' + l.interval + ' ms.');
-            setInterval(function (args) {
-                logger.log({
-                    url: args.url
-                });
-            }, l.interval, l);
-        }
+    if ( masterConfig.sensors) {
+        logger.load(masterConfig.sensors);
     }
 }

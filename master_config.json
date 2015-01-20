@@ -6,16 +6,19 @@
         }
     },
     "loggers": {
-        "db": "./home.db",
-        "crons": [
-            {
-                "url": "/api/pool/temp",
-                "interval": 300000
-            },
-            {
-                "url": "/api/garage/temp",
-                "interval": 300000
-            }
-        ]
-    }
+        "db": "./home.db"
+    },
+    "sensors": [{
+        "id": "/api/pool/temp",
+        "name": "Temperature Piscine",
+        "dbTable": "logger_sensors_pool",
+        "log": true,
+        "interval": 30000
+    },{
+        "id": "/api/garage/temp",
+        "name": "Temperature Garage",
+        "dbTable": "logger_sensors_garage",
+        "log": true,
+        "interval": 30000
+    }]
 }
