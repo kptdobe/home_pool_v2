@@ -53,10 +53,26 @@ module.exports = function (config) {
         .get(function (req, res) {
             readAll(req.query.id, null, null, function(err, rows) {
                 var t = req.query.id.indexOf('pool') != -1 ? 'logger_sensors_pool' : 'logger_sensors_garage';
+
+                var mysql      = require('mysql');
+                var connection = mysql.createConnection({
+                    host     : 'heatrpi',
+                    user     : 'pi',
+                    password : 'alex10'
+                });
+
+                connection.connect();
+
                 for(var i = 0;i<rows.length;i++) {
                     var r = rows[i];
-                    res.write('INSERT INTO '+t+'(logtime,id,temp) VALUES (' + r.time + ',\'' + r.id + '\',' + r.value + ');\n');
+                    var req = 'INSERT INTO '+t+'(logtime,id,temp) VALUES (' + r.time + ',\'' + r.id + '\',' + r.value + ');';
+                    connection.query(req, function(err, rows, fields) {
+                        if (err) throw err;
+                    });
+
                 }
+
+                connection.end();
             });
         });
 
