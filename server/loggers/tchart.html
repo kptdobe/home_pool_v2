@@ -17,7 +17,7 @@
                             data: []
                         };
                         for (var i = 0; i < data.records.length; i++) {
-                            series.data.push([data.records[i].time, data.records[i].value]);
+                            series.data.push([data.records[i].logtime, data.records[i].temp]);
                         }
                         chart.addSeries(series);
                     });

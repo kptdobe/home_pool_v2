@@ -1,11 +1,13 @@
-var sqlite3 = require('sqlite3');
+var mysql = require('mysql');
 var utils = require('../utils.js');
 var util = require('util');
 var mu = require('mu2');
 
 module.exports = function (config) {
     // setup database connection for logging
-    var db = new sqlite3.Database(config.db);
+
+    var pool  = mysql.createPool(config.db);
+
     mu.root = __dirname;
 
     var sensorsMap = {};
@@ -13,24 +15,42 @@ module.exports = function (config) {
     function insert(data) {
         if (!data || !data.id || !sensorsMap[data.id]) return;
 
-        var statement = db.prepare("INSERT INTO " + sensorsMap[data.id].dbTable + " VALUES (?, ?, ?)");
-        statement.run(Date.now(), data.id, data.value);
-        statement.finalize();
+        var sql = "INSERT INTO " + sensorsMap[data.id].dbTable + " VALUES (?, ?, ?)";
+        var inserts = [Date.now(), data.id, data.value];
+        sql = mysql.format(sql, inserts);
+
+        pool.query(sql, function(err, rows) {
+            if( err ) throw err;
+        });
     }
 
     function readAll(id, startTime, maxRecords, callback) {
-        startTime = startTime || Date.now() - 1000 * 60 * 60 * 24; //default to last 24h
-        maxRecords = maxRecords || -1;
+        startTime = startTime || 0; //Date.now() - 1000 * 60 * 60 * 24; //default to last 24h
+        maxRecords = maxRecords || null;
 
         if (id && sensorsMap[id]) {
-            db.all("SELECT * FROM " + sensorsMap[id].dbTable + " WHERE id = ? AND time > (strftime('%s',?)*1000) ORDER BY time ASC LIMIT ?;", id, startTime, maxRecords, callback);
+            var sql = "SELECT * FROM " + sensorsMap[id].dbTable + " WHERE id = ? AND logtime > ? ORDER BY logtime ASC;";
+            var inserts = [id, startTime];
+            sql = mysql.format(sql, inserts);
+
+            console.log('1 Executing... ' + sql);
+
+            pool.query(sql, callback);
+
         } else {
             var tables = '';
             for (var s in sensorsMap) {
-                tables += sensorsMap[s] + ' ,';
+                tables += sensorsMap[s].dbTable + ' ,';
             }
             tables = tables.substring(0, tables.length - 1);
-            db.all("SELECT * FROM " + tables + " WHERE time > (strftime('%s',?)*1000) ORDER BY time ASC LIMIT ?;", startTime, maxRecords, callback);
+
+            var sql = "SELECT * FROM " + tables + " WHERE logtime > ? ORDER BY logtime ASC;";
+            var inserts = [startTime];
+            sql = mysql.format(sql, inserts);
+
+            console.log('2 Executing... ' + sql);
+
+            pool.query(sql, callback);
         }
     }
 
@@ -46,34 +66,6 @@ module.exports = function (config) {
                     total: rows.length,
                     records: rows
                 });
-            });
-        });
-
-    config.router.route('/sensorsins')
-        .get(function (req, res) {
-            var id = req.query.id;
-            readAll(req.query.id, null, null, function(err, rows) {
-                var t = id.indexOf('pool') != -1 ? 'logger_sensors_pool' : 'logger_sensors_garage';
-
-                var mysql      = require('mysql');
-                var connection = mysql.createConnection({
-                    host     : 'heatrpi',
-                    user     : 'pi',
-                    password : 'alex10'
-                });
-
-                connection.connect();
-
-                for(var i = 0;i<rows.length;i++) {
-                    var r = rows[i];
-                    var req = 'INSERT INTO '+t+'(logtime,id,temp) VALUES (' + r.time + ',\'' + r.id + '\',' + r.value + ');';
-                    connection.query(req, function(err, rows, fields) {
-                        if (err) throw err;
-                    });
-
-                }
-
-                connection.end();
             });
         });
 
