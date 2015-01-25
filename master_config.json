@@ -6,7 +6,13 @@
         }
     },
     "loggers": {
-        "db": "./home.db"
+        "db": {
+            "host": "",
+            "user": "",
+            "password": "",
+            "database": "temperature",
+            "multipleStatements": true
+        }
     },
     "sensors": [{
         "id": "/api/pool/temp",
