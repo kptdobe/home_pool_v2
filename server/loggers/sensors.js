@@ -49,11 +49,22 @@ module.exports = function (config) {
             });
         });
 
+    config.router.route('/sensorsins')
+        .get(function (req, res) {
+            readAll(req.query.id, null, null, function(err, rows) {
+                var t = req.query.id.indexOf('pool') != -1 ? 'logger_sensors_pool' : 'logger_sensors_garage';
+                for(var i = 0;i<rows.length;i++) {
+                    var r = rows[i];
+                    res.write('INSERT INTO '+t+'(logtime,id,temp) VALUES (' + r.time + ',\'' + r.id + '\',' + r.value + ');\n');
+                }
+            });
+        });
+
     config.router.route('/sensors/tchart')
         .get(function (req, res) {
             var series = [];
-            if (req.body.id && sensorsMap[req.body.id]) {
-                series.push(sensorsMap[req.body.id]);
+            if (req.query.id && sensorsMap[req.query.id]) {
+                series.push(sensorsMap[req.query.id]);
             } else {
                 for (var s in sensorsMap) {
                     series.push(sensorsMap[s]);
