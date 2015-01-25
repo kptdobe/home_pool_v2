@@ -20,7 +20,9 @@ module.exports = function (config) {
         sql = mysql.format(sql, inserts);
 
         pool.query(sql, function(err, rows) {
-            if( err ) throw err;
+            if( err ) {
+                console.log('[ERROR] Cannot save temperature... ' + err);
+            }
         });
     }
 
