@@ -25,7 +25,8 @@ module.exports = function (config) {
     }
 
     function readAll(id, startTime, maxRecords, callback) {
-        startTime = startTime || 0; //Date.now() - 1000 * 60 * 60 * 24; //default to last 24h
+        var cache = 1000 * 60 * 60; //benefit from db caching (1h cache)
+        startTime = startTime || Math.round(Date.now() / cache ) * cache - 1000 * 60 * 60 * 24 * 7; //default to last 7 days
         maxRecords = maxRecords || null;
 
         if (id && sensorsMap[id]) {
@@ -33,7 +34,7 @@ module.exports = function (config) {
             var inserts = [id, startTime];
             sql = mysql.format(sql, inserts);
 
-            console.log('1 Executing... ' + sql);
+            console.log('[DEBUG] Executing... ' + sql);
 
             pool.query(sql, callback);
 
@@ -48,7 +49,7 @@ module.exports = function (config) {
             var inserts = [startTime];
             sql = mysql.format(sql, inserts);
 
-            console.log('2 Executing... ' + sql);
+            console.log('[DEBUG] Executing... ' + sql);
 
             pool.query(sql, callback);
         }
@@ -56,7 +57,10 @@ module.exports = function (config) {
 
     config.router.route('/sensors')
         .get(function (req, res) {
+            var time = Date.now();
+            console.log('[DEBUG] Start readAll');
             readAll(req.query.id, req.query.startTime, req.query.maxRecords, function (err, rows) {
+                console.log('[DEBUG] readAll query execution time: ' + (Date.now() - time) + 'ms.');
                 if (err) {
                     res.writeHead(500, {"Content-type": "text/html"});
                     res.end(err + "\n");
