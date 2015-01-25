@@ -51,8 +51,9 @@ module.exports = function (config) {
 
     config.router.route('/sensorsins')
         .get(function (req, res) {
+            var id = req.query.id;
             readAll(req.query.id, null, null, function(err, rows) {
-                var t = req.query.id.indexOf('pool') != -1 ? 'logger_sensors_pool' : 'logger_sensors_garage';
+                var t = id.indexOf('pool') != -1 ? 'logger_sensors_pool' : 'logger_sensors_garage';
 
                 var mysql      = require('mysql');
                 var connection = mysql.createConnection({
