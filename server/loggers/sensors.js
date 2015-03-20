@@ -32,7 +32,7 @@ module.exports = function (config) {
         maxRecords = maxRecords || null;
 
         if (id && sensorsMap[id]) {
-            var sql = "SELECT * FROM " + sensorsMap[id].dbTable + " WHERE id = ? AND logtime > ? ORDER BY logtime ASC;";
+            var sql = "SELECT id, logtime, temp FROM " + sensorsMap[id].dbTable + " WHERE id = ? AND logtime > ? ORDER BY logtime ASC;";
             var inserts = [id, startTime];
             sql = mysql.format(sql, inserts);
 
@@ -47,7 +47,7 @@ module.exports = function (config) {
             }
             tables = tables.substring(0, tables.length - 1);
 
-            var sql = "SELECT * FROM " + tables + " WHERE logtime > ? ORDER BY logtime ASC;";
+            var sql = "SELECT id, logtime, temp FROM " + tables + " WHERE logtime > ? ORDER BY logtime ASC;";
             var inserts = [startTime];
             sql = mysql.format(sql, inserts);
 

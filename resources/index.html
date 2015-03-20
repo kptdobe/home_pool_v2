@@ -37,7 +37,8 @@
             <h3 class="panel-title">Garage</h3>
         </div>
         <div class="panel-body">
-            <h4>Température: <a href="/log/sensors/tchart"><div class="home-TemperatureDisplay" data-config='{"url": "/api/garage/temp"}'></div></h4>
+            <h4>Température: <a href="/log/sensors/tchart"><div class="home-TemperatureDisplay" data-config='{"url": "/api/garage/temp"}'></div></a></h4>
+            <h4>Porte: <div class="home-OpeningDisplay" data-config='{"url": "/api/garage/door"}'></div></h4>
         </div>
     </div>
 </div>
@@ -51,6 +52,7 @@
 
 <script src="js/app/utils/Utils.js"></script>
 
+<script src="js/app/models/OpeningDisplay.js"></script>
 <script src="js/app/models/PersistedData.js"></script>
 <script src="js/app/models/Scheduler.js"></script>
 <script src="js/app/models/Switch.js"></script>
@@ -58,6 +60,7 @@
 <script src="js/app/models/TemperatureInput.js"></script>
 
 <script src="js/app/views/Loading.js"></script>
+<script src="js/app/views/OpeningDisplay.js"></script>
 <script src="js/app/views/Scheduler.js"></script>
 <script src="js/app/views/Switch.js"></script>
 <script src="js/app/views/TemperatureDisplay.js"></script>
