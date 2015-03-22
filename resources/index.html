@@ -30,7 +30,6 @@
             <h4>Filtration (marche forcée): <div class="home-Switch" data-config='{"url": "/api/pool/filtration"}'></div></h4>
             <h4>Dosipool: <div class="home-Switch" data-config='{"url": "/api/pool/dosi"}'></div></h4>
             <!--<h4>Filtration: <div class="home-Scheduler" data-config='{"id": "filtration", "data": { "url": "/api/pool/filtration"}, "startFct":"function() {//console.log(\"from client start\");}", "stopFct":"function() {//console.log(\"from client stop\");}"}'></div></h4>-->
-            <!--<h4>Démarrage manuel filtration: <div class="home-Switch" data-config='{"url": "/api/pool/filtration"}'></div></h4>-->
             <!--<h4>Chauffage: <div class="home-TemperatureInput" data-config='{"id": "poolTemperature", "data": {"url":"/api/pool/temp"}}'></div></h4>-->
         </div>
     </div>
@@ -41,6 +40,17 @@
         <div class="panel-body">
             <h4>Température: <a href="/log/sensors/tchart"><div class="home-TemperatureDisplay" data-config='{"url": "/api/garage/temp"}'></div></a></h4>
             <h4>Porte: <div class="home-OpeningDisplay" data-config='{"url": "/api/garage/door"}'></div></h4>
+        </div>
+    </div>
+    <div class="panel panel-info">
+        <div class="panel-heading">
+            <h3 class="panel-title">Chauffage</h3>
+        </div>
+        <div class="panel-body">
+            <h4>Température PC Piscine (dep): <div class="home-TemperatureDisplay" data-config='{"url": "/api/heat/temp_heat_pcp_dep"}'></div></h4>
+            <h4>Température PC Piscine (ret): <div class="home-TemperatureDisplay" data-config='{"url": "/api/heat/temp_heat_pcp_ret"}'></div></h4>
+            <h4>Température PC Salon (dep): <div class="home-TemperatureDisplay" data-config='{"url": "/api/heat/temp_heat_pcs_dep"}'></div></h4>
+            <h4>Température PC Salon (ret): <div class="home-TemperatureDisplay" data-config='{"url": "/api/heat/temp_heat_pcs_ret"}'></div></h4>
         </div>
     </div>
 </div>
