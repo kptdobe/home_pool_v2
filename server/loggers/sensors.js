@@ -97,6 +97,8 @@ module.exports = function (config) {
         log: function (sensor) {
             utils.get(config.server, sensor.id, function (data) {
                 if (data && data.value) {
+                    //temp value will always be between -50 and 100. Some input are sometimes lower or greater than those extrems - sensor defect
+                    if ( data.value < -50 && data.value > 100 ) return;
                     insert({
                         id: sensor.id,
                         value: data.value
