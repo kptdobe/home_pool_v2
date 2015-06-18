@@ -60,9 +60,9 @@ module.exports = function (config) {
     config.router.route('/sensors')
         .get(function (req, res) {
             var time = Date.now();
-            console.log('[DEBUG] Start readAll');
+            console.time('[DEBUG] readAll ' + req.query.id);
             readAll(req.query.id, req.query.startTime, req.query.maxRecords, function (err, rows) {
-                console.log('[DEBUG] readAll query execution time: ' + (Date.now() - time) + 'ms.');
+                console.timeEnd('[DEBUG] readAll ' + req.query.id);
                 if (err) {
                     res.writeHead(500, {"Content-type": "text/html"});
                     res.end(err + "\n");
