@@ -47,33 +47,23 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header">Home</h1>
+                    <h1 class="page-header">Températures chaufferie</h1>
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
             <div class="row">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Piscine</h3>
-                    </div>
-                    <div class="panel-body">
-                        <h4>Lumière: <div class="home-Switch" data-config='{"url": "/api/pool/light"}'></div></h4>
-                        <h4>Température avant échangeur: </h4><a href="/log/sensors/tchart"><div class="home-TemperatureDisplay" data-config='{"url": "/api/pool/temp"}'></div></a>
-                        <h4>Filtration (marche forcée): <div class="home-Switch" data-config='{"url": "/api/pool/filtration"}'></div></h4>
-                        <h4>Dosipool: <div class="home-Switch" data-config='{"url": "/api/pool/dosi"}'></div></h4>
-                        <!--<h4>Filtration: <div class="home-Scheduler" data-config='{"id": "filtration", "data": { "url": "/api/pool/filtration"}, "startFct":"function() {//console.log(\"from client start\");}", "stopFct":"function() {//console.log(\"from client stop\");}"}'></div></h4>-->
-                        <!--<h4>Chauffage: <div class="home-TemperatureInput" data-config='{"id": "poolTemperature", "data": {"url":"/api/pool/temp"}}'></div></h4>-->
-                    </div>
-                </div>
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Garage</h3>
-                    </div>
-                    <div class="panel-body">
-                        <h4>Température: <a href="/log/sensors/tchart"><div class="home-TemperatureDisplay" data-config='{"url": "/api/garage/temp"}'></div></a></h4>
-                        <h4>Porte: <div class="home-OpeningDisplay" data-config='{"url": "/api/garage/door"}'></div></h4>
-                    </div>
-                </div>
+                <div class="home-TemperaturePanel" data-config='{"title": "Chauffe-eau (dep)", "url": "/api/heat/temp_heat_water_dep"}'></div>
+                <div class="home-TemperaturePanel" data-config='{"title": "Chauffe-eau (ret)", "url": "/api/heat/temp_heat_water_ret"}'></div>
+                <div class="home-TemperaturePanel" data-config='{"title": "Echangeur piscine (dep)", "url": "/api/heat/temp_heat_pool_dep"}'></div>
+                <div class="home-TemperaturePanel" data-config='{"title": "Echangeur piscine (ret)", "url": "/api/heat/temp_heat_pool_ret"}'></div>
+                <div class="home-TemperaturePanel" data-config='{"title": "Radiateurs (dep)", "url": "/api/heat/temp_heat_rad_dep"}'></div>
+                <div class="home-TemperaturePanel" data-config='{"title": "Radiateurs (ret)", "url": "/api/heat/temp_heat_rad_ret"}'></div>
+                <div class="home-TemperaturePanel" data-config='{"title": "Plancher Chauffant - Piscine (dep)", "url": "/api/heat/temp_heat_pcp_dep"}'></div>
+                <div class="home-TemperaturePanel" data-config='{"title": "Plancher Chauffant - Piscine (ret)", "url": "/api/heat/temp_heat_pcp_ret"}'></div>
+                <div class="home-TemperaturePanel" data-config='{"title": "Plancher Chauffant - Salon (dep)", "url": "/api/heat/temp_heat_pcs_dep"}'></div>
+                <div class="home-TemperaturePanel" data-config='{"title": "Plancher Chauffant - Salon (ret)", "url": "/api/heat/temp_heat_pcs_ret"}'></div>
+                <div class="home-TemperaturePanel" data-config='{"title": "Plancher Chauffant - Hub (dep)", "url": "/api/heat/temp_heat_pch_dep"}'></div>
+                <div class="home-TemperaturePanel" data-config='{"title": "Plancher Chauffant - Hub (ret)", "url": "/api/heat/temp_heat_pch_ret"}'></div>
             </div>
         </div>
         <!-- /.container-fluid -->

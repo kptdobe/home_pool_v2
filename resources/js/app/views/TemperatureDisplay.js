@@ -17,7 +17,7 @@
                 self.updateTemperature();
             });
             this.$el = $(this.template(this.model.toJSON()));
-            this.$label = this.$el;
+            this.$label = this.$el.find(".value");
         },
 
         render: function () {
@@ -29,7 +29,10 @@
         updateTemperature: function() {
             var v = this.model.get("value");
             if( v ) {
-                this.$label.html(v + " ºC");
+                console.log(v);
+                var output = "" + Math.floor(v) + "<span>." + Math.floor((v % 1) * 10) + "</span><strong>&deg;</strong>";
+
+                this.$label.html(output);
             } else {
                 this.$label.html("Etat inconnu");
             }

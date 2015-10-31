@@ -40,7 +40,7 @@
         updateButton: function() {
             var v = this.model.get("value");
             if( this.config[v] ) {
-                this.$el.html(this.config[v].label);
+                //this.$el.html(this.config[v].label);
                 this.$el.removeClass(this.config[home.util.notValue(v)].css);
                 this.$el.addClass(this.config[v].css);
             } else {

@@ -14,12 +14,6 @@
 
             home.contextPath = "/";
             home.resourceFolder = home.contextPath + "res/";
-//            home.event = _.extend({}, Backbone.Events);
-
-            // setup data
-//            screens.screen = new screens.Collections.Screen();
-//            screens.container = new screens.Collections.Container();
-
         }
     };
 
